@@ -137,7 +137,6 @@
       .mute-toggle {
         position: fixed;
         top: 16px;
-        right: 16px;
         z-index: 10;
         display: inline-flex;
         width: 38px;
@@ -155,6 +154,14 @@
           border-color 150ms ease,
           background 150ms ease,
           transform 150ms ease;
+      }
+
+      #mute {
+        right: 16px;
+      }
+
+      #reset {
+        right: 66px;
       }
 
       .mute-toggle:hover {
@@ -283,6 +290,15 @@
         🔊
       </button>
 
+      <button
+        class="mute-toggle"
+        id="reset"
+        type="button"
+        aria-label="Reset counter"
+      >
+        ↺
+      </button>
+
       <div class="counter" id="counter" aria-live="polite">0 trains dispatched</div>
     </main>
 
@@ -397,11 +413,18 @@
         }
       }
 
+      const resetButton = document.querySelector("#reset");
+
       dispatcher.addEventListener("click", dispatchTrain);
       muteButton.addEventListener("click", (event) => {
         event.stopPropagation();
         muted = !muted;
         syncMuteButton();
+      });
+      resetButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        count = 0;
+        updateCounter();
       });
 
       window.addEventListener("keydown", (event) => {
